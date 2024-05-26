@@ -8,6 +8,9 @@ import { useSelector } from "react-redux";
 
 const Header = () =>{
 
+    //manage menu
+    const [isOpen, setIsOpen] = useState(false);
+
     //  let btnName = "Login";
 
     const [btnNameReact, setBtnNameReact] = useState("Login");
@@ -30,21 +33,47 @@ const Header = () =>{
     const cartItems = useSelector((store)=> store.cart.items);
     // console.log(cartItems);
 
+    //Menu toggle
+    const toggleMenu= () => {
+        setIsOpen(!isOpen);
+    }
+
+    // Function to close the menu
+  const closeMenu = () => {
+    setIsOpen(false);
+  };
+
     return(
-        <div className="flex justify-between shadow-lg bg-cyan-200 h-24">        
-        <div className="logo-container rounded-lg px-2 m-2">
-            <Link to="/"><img className="w-20 rounded-[50%] transform transition duration-300 hover:scale-110"
+        <header className="
+        bg-gray-800
+         text-white 
+         p-4 
+         flex 
+         justify-between 
+         items-center
+         font-serif   
+        ">  
+              {/* logo */}
+        <div className="flex items-center">
+            <Link to="/"><img className="
+            rounded-full transform transition duration-300 hover:scale-105
+            h-20 w-20 mr-2
+            "
             src={LOGO_URL} alt="logo"/></Link>
             
         </div>
-        <div className="flex items-center flex-wrap font-bold">
-            <ul className="flex p-4 m-4">
-                <li className="px-4 hover:text-green-600"><Link to="/">Home</Link></li>
-                <li className="px-4 hover:text-green-600"><Link to="/about">About Us</Link></li>
-                <li className="px-4  hover:text-green-600"><Link to="/contact">Contact Us</Link></li>
-                <li className="px-4 hover:text-green-600 "><Link to="/cart">Cart({cartItems.length} items)</Link></li>
-                {/* <li className="px-4 hover:text-green-600"><Link to="/grocery">Grocery</Link></li> */}
-                <li className="px-4">Online:{onlineStatus?"Yes":"No"}</li>
+            <nav className="
+            md:flex 
+            md:items-center">
+            <ul className={`md:flex md:space-x-4 md:static absolute top-24 left-0 w-full bg-gray-800 md:bg-transparent z-10 transition-transform duration-300 ease-in-out transform ${
+            isOpen ? 'translate-x-0' : '-translate-x-full'
+          } md:translate-x-0`}>
+                <li className="px-4 py-2 md:py-0 hover:text-green-600 hover:underline"><Link  onClick={closeMenu} to="/" >Home</Link></li>
+                <li className="px-4 py-2 md:py-0 hover:text-green-600 hover:underline"><Link  onClick={closeMenu} to="/about">About Us</Link></li>
+                <li className="px-4 py-2 md:py-0 hover:text-green-600 hover:underline"><Link  onClick={closeMenu} to="/contact">Contact Us</Link></li>
+                <li className="px-4 py-2 md:py-0 hover:text-green-600 hover:underline"><Link  onClick={closeMenu} to="/cart">Cart ({cartItems.length})</Link></li>
+                {/* <li className="px-4 py-2 md:py-0 hover:text-green-600 hover:underline"><Link to="/grocery">Grocery</Link></li> */}
+                <li className="px-4 py-2 md:py-0 ">Online:{onlineStatus?"Yes":"No"}</li>
 
                 {/* <button className="login" onClick={()=>{
                     btnNameReact === "Login" ?
@@ -54,8 +83,11 @@ const Header = () =>{
                 }}>{btnNameReact}</button> */}
                 {/* <li className="px-4 hover:text-green-600">{loggedInUser}</li> */}
             </ul>
-        </div>
-        </div>
+            <button onClick={toggleMenu} className="md:hidden text-xl focus:outline-none transition-transform duration-300 hover:text-green-600">
+            {isOpen ? '✕' : '☰'}
+            </button>
+            </nav>
+        </header>
     );
 }
 

@@ -41,7 +41,12 @@ const AppLayout = () =>{
         // provide our redux store
         <Provider store={appStore}>
             <UserContext.Provider value={{loggedInUser:userName , setUserName}}>
-         <div className="app">
+         <div className="
+          flex
+          flex-col 
+          min-h-screen
+          "
+         >
             <ToastContainer/>
             <Header/>
         {/* placeholder or layout template for route-specific component */}
