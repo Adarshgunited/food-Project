@@ -1,6 +1,11 @@
-import { useEffect } from "react";
+import { list } from "postcss";
+import { useEffect, useState } from "react";
 
 const Contact = () => {
+
+            const [text,setText] = useState("");
+    
+    
 
     // This code block runs after the component has been rendered to the screen.
     useEffect(()=>{
@@ -21,7 +26,7 @@ const Contact = () => {
 
     // console.log("render");
     return (
-        <div>
+        <div className="">
             <h1 className="font-bold text-3xl m-4 p-4">Contact Us</h1>
             <form>
                 <input
@@ -32,6 +37,9 @@ const Contact = () => {
                 <input type="text" className="border border-black p-2 m-2 rounded-lg" placeholder="message"/>
                 <button className="border border-black p-2 m-2 rounded-lg">Submit</button>
             </form>
+            
+
+            
         </div>
     );
 };

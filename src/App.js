@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
-// import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
@@ -12,11 +11,15 @@ import UserContext from "./utils/UserContext";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Cart from "./components/Cart";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import About from "./components/About";
 // import Grocery from "./components/Grocery";
 
 // lazy loading 
 const Grocery = lazy(()=> import("./components/Grocery"));
 
+// About variable holds reference to the lazy loaded component
 const About = lazy(()=> import("./components/About"));
 
 const AppLayout = () =>{
@@ -25,9 +28,9 @@ const AppLayout = () =>{
     const [userName, setUserName] = useState();
  
     // authentication
-    //assume we got data for to set the userName.
+    //assume we got data from api to set the userName.
     useEffect(()=>{
-        //make an api call and send username and password. 
+        //make an api call and got username and password. 
         const data = {
             name:"Adarsh Gupta",
         }
@@ -39,10 +42,11 @@ const AppLayout = () =>{
         <Provider store={appStore}>
             <UserContext.Provider value={{loggedInUser:userName , setUserName}}>
          <div className="app">
+            <ToastContainer/>
             <Header/>
         {/* placeholder or layout template for route-specific component */}
         <Outlet/>
-        <Footer/>
+        {/* <Footer/> */}
     </div>
         </UserContext.Provider>
         </Provider>
@@ -54,7 +58,7 @@ const appRouter = createBrowserRouter([
     {
         path: "/",
         element: <AppLayout/>,
-        // here we have created children route for our parent AppLayout, where our outlet is  changes w.r.to route.
+        // here we have created children route for our parent AppLayout, where our outlet is  changed w.r.to route.
         children: [
             {
                 // this is the route/path
@@ -65,7 +69,7 @@ const appRouter = createBrowserRouter([
             },
             {
                 path: "/about",
-                // suspense for wrapping and show loading UI
+                //lazy loading so suspense for wrapping and show loading UI
                 element: <Suspense fallback={<h1>Loading...</h1>}><About/></Suspense>,
         },
         {

@@ -3,7 +3,7 @@ import { CDN_URL } from "../utils/constants";
 import { addItem } from "../utils/cartSlice";
 
 const ItemList = ({items}) => {
-    // console.log(dummyInfo);
+    // console.log(items);
 
     // dispatch fn use useDispatch hook
     const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const ItemList = ({items}) => {
                     <div
                     // test id for test cases
                     data-testid="foodItems"
-                    key={item.card.info.id} 
+                    key={item?.card?.info?.id} 
                      className="p-2 m-2 border-gray-400 border-b-2 text-left flex justify-between">
                         <div className="w-9/12">
                             <div className=" py-2 font-bold">
@@ -33,12 +33,12 @@ const ItemList = ({items}) => {
                         </div>
                         <div className="w-3/12">
                             <div className="absolute">
-                            <button className=" bg-black text-white shadow-lg m-auto p-2 mx-16 rounded-lg" 
+                            <button className=" bg-white text-orange-500 shadow-lg m-auto p-2 mx-16 rounded-lg font-bold hover:text-orange-400 " 
                             onClick={() => 
                             // dispatch an action
-                            handleAddItem(item)}> Add +</button>
+                            handleAddItem(item)}>Add</button>
                             </div>
-                            <img src={CDN_URL + item.card.info.imageId} className="rounded-md "/>
+                            {(item.card.info.imageId && <img src={CDN_URL + item.card.info.imageId} className="rounded-md " alt={item.card.info.name}/>)}
                         </div>
                     </div>
                 ))}

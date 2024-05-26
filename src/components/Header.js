@@ -12,7 +12,7 @@ const Header = () =>{
 
     const [btnNameReact, setBtnNameReact] = useState("Login");
 
-    //variable check onlineStatus
+    //variable check onlineStatus, custom hook
     const onlineStatus = useOnlineStatus();
 
     // context hook (assume global object)
@@ -20,9 +20,9 @@ const Header = () =>{
 
     // console.log("header rendered")
 
-    useEffect(()=>{
+    // useEffect(()=>{
     // console.log("useEffect is called");
-    },[btnNameReact]);
+    // },[btnNameReact]);
     
     // console.log("re-render that whole header/component if state changes")
 
@@ -31,28 +31,28 @@ const Header = () =>{
     // console.log(cartItems);
 
     return(
-        <div className="flex justify-between shadow-lg
-        bg-gray-300 sm:bg-yellow-200 md:bg-blue-300 lg:bg-orange-200">        
-        <div className="logo-container">
-            <Link to="/"><img className="w-36"
+        <div className="flex justify-between shadow-lg bg-cyan-200 h-24">        
+        <div className="logo-container rounded-lg px-2 m-2">
+            <Link to="/"><img className="w-20 rounded-[50%] transform transition duration-300 hover:scale-110"
             src={LOGO_URL} alt="logo"/></Link>
             
         </div>
-        <div className="flex items-center flex-wrap">
+        <div className="flex items-center flex-wrap font-bold">
             <ul className="flex p-4 m-4">
+                <li className="px-4 hover:text-green-600"><Link to="/">Home</Link></li>
+                <li className="px-4 hover:text-green-600"><Link to="/about">About Us</Link></li>
+                <li className="px-4  hover:text-green-600"><Link to="/contact">Contact Us</Link></li>
+                <li className="px-4 hover:text-green-600 "><Link to="/cart">Cart({cartItems.length} items)</Link></li>
+                {/* <li className="px-4 hover:text-green-600"><Link to="/grocery">Grocery</Link></li> */}
                 <li className="px-4">Online:{onlineStatus?"Yes":"No"}</li>
-                <li className="px-4"><Link to="/">Home</Link></li>
-                <li className="px-4"><Link to="/about">About Us</Link></li>
-                <li className="px-4"><Link to="/contact">Contact Us</Link></li>
-                <li className="px-4 font-bold "><Link to="/cart">Cart - ({cartItems.length} items)</Link></li>
-                <li className="px-4"><Link to="/grocery">Grocery</Link></li>
-                <button className="login" onClick={()=>{
+
+                {/* <button className="login" onClick={()=>{
                     btnNameReact === "Login" ?
                     setBtnNameReact("Logout") :
                     setBtnNameReact("Login");
                     // console.log(btnNameReact);
-                }}>{btnNameReact}</button>
-                <li className="px-4 font-bold">{loggedInUser}</li>
+                }}>{btnNameReact}</button> */}
+                {/* <li className="px-4 hover:text-green-600">{loggedInUser}</li> */}
             </ul>
         </div>
         </div>

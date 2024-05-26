@@ -44,13 +44,12 @@ const RestaurantMenu = () =>{
     if(resInfo === null)
     return <Shimmer/>;
 
-    const {name, cuisines,costForTwoMessage} = resInfo?.data?.cards[0]?.card?.card?.info;
+    const {name, cuisines,costForTwoMessage} = resInfo?.data?.cards[2]?.card?.card?.info;
 
-    const {itemCards} = resInfo.data.cards[2].groupedCard.cardGroupMap.REGULAR.cards[2].card.card;
+    // const {itemCards} = resInfo.data.cards[2].groupedCard.cardGroupMap.REGULAR.cards[2].card.card;
 
-    console.log(itemCards)
-     
-    const categories = resInfo.data.cards[2].groupedCard.cardGroupMap.REGULAR.cards.filter((c)=>c.card?.["card"]?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory");
+    // console.log(itemCards)
+    const categories = resInfo?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((c)=>c.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory");
 
     // console.log(categories)
 
@@ -63,7 +62,7 @@ const RestaurantMenu = () =>{
             {/* categories accordion */}
             {
                 // controlled component
-                categories.map((cardData, index)=>(<RestaurantCategory key={cardData.card.card.title} data={cardData?.card?.card} showItems={index === showIndex ? true : false}
+                categories.map((cardData, index)=>(<RestaurantCategory key={cardData?.card?.card?.title} data={cardData?.card?.card} showItems={index === showIndex ? true : false}
                 setShowIndex = {()=> setShowIndex(index)}
                 />))
             }

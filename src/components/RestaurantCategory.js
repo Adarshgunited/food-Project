@@ -10,7 +10,7 @@ const RestaurantCategory = ({data, showItems, setShowIndex}) => {
     // open/collapse our accordion logic
     // toggle feature
     const handlerClick = () => {
-        // setShowItems(!showItems);
+        // setShowIndex(!showItems);
         setShowIndex();
     }
 

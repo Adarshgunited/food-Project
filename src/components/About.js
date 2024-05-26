@@ -29,15 +29,15 @@ class About extends Component {
     return (
     <div>
       <h1>About</h1>
-            <h1>This is Namaste React Web Series</h1>
+            {/* <h1>This is Namaste React Web Series</h1>
             {/* provided by react useContext kindOf alternate way */}
-            <UserContext.Consumer>
+            {/* <UserContext.Consumer>
               {({loggedInUser})=> <h1 className='font-bold'>{loggedInUser}</h1>}
-            </UserContext.Consumer>
+            </UserContext.Consumer> */}
 
             {/* Render UserClass component with a prop */}
       {/* <User name={'adarsh (Functional component)'}/> */}
-      <UserClass name={'first'} />
+      {/* <UserClass name={'first'} /> */}
       {/* You can create multiple instances of UserClass with different props */}
       {/* <UserClass name={'Second'} /> */}
     </div>

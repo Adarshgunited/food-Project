@@ -15,7 +15,7 @@ it("Should load Header Component with a login Button",() => {
         </Provider>
         </BrowserRouter>
     );
-    //most used , even more descriptive
+    //most used - getByRole, even more descriptive by name
     const loginButton = screen.getByRole("button", {name:"Login"});
     // alternate way
     // const loginButton = screen.getByText("Login");
@@ -70,7 +70,7 @@ it("Should change Login Button to Logout on click",()=>{
 
     const loginButton = screen.getByRole("button",{name:"Login"});
     
-    // when we click on the button this is triggered
+    //doubt, when we click on the button this is triggered
     fireEvent.click(loginButton);
 
     const logoutButton = screen.getByRole("button",{name:"Logout"});

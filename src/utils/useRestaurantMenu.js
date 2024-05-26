@@ -11,7 +11,7 @@ const useRestaurantMenu = (resId) => {
     },[]);
 
     const fetchData = async() =>{
-        const data = await fetch("https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=19.4256875&lng=72.8373771&restaurantId="+resId);
+        const data = await fetch(MENU_API+resId);
         const json = await data.json();
         // our data is present in json.data
         setResInfo(json);
