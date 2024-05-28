@@ -27,13 +27,13 @@ const ItemList = ({items}) => {
                         <div className="w-9/12">
                             <div className=" py-2 font-bold">
                         <span>{item.card.info.name}</span>
-                    <span> - ₹ {item.card.info.price ? item.card.info.price / 100 : item.card.info.defaultPrice / 100}</span>
+                    <span> - ₹ {Math.round(item.card.info.price ? item.card.info.price / 100 : item.card.info.defaultPrice / 100)}</span>
                     </div>
                         <p className="text-sm text-gray-600">{item.card.info.description}</p>
                         </div>
                         <div className="w-3/12">
                             <div className="absolute">
-                            <button className=" bg-white text-orange-500 shadow-lg m-auto p-2 mx-16 rounded-lg font-bold hover:text-orange-400 " 
+                            <button className=" bg-white text-green-500 shadow-lg m-auto p-2 mx-16 rounded-lg font-bold hover:text-orange-400 " 
                             onClick={() => 
                             // dispatch an action
                             handleAddItem(item)}>Add</button>

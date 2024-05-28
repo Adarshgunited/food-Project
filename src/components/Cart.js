@@ -100,9 +100,9 @@ const Cart = () => {
 
 
              <div className="flex justify-center">
-                 {cartItems.length !== 0 ? <button className="p-2 m-2 bg-black text-white rounded-lg font-bold" onClick={handleClearCart}>
+                 {cartItems.length !== 0 && (<button className="p-2 m-2 bg-black text-white rounded-lg font-bold" onClick={handleClearCart}>
                      Clear Cart
-                 </button> : <></>}
+                 </button>)}
              </div>
              {cartItems.length === 0 && <h1 className="text-xl font-medium text-center"> Your cart is empty. Please add items to your cart !!!</h1>}
              {cartItems.length === 0 && <div className="flex justify-center m-2 p-2">

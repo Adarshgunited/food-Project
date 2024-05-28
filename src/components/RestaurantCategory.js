@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ItemList from "./ItemList";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 const RestaurantCategory = ({data, showItems, setShowIndex}) => {
     // console.log(data);
@@ -9,27 +10,29 @@ const RestaurantCategory = ({data, showItems, setShowIndex}) => {
 
     // open/collapse our accordion logic
     // toggle feature
-    const handlerClick = () => {
+    const handleClick = () => {
         // setShowIndex(!showItems);
         setShowIndex();
     }
 
     return(
-        <div>
+        <div className="w-6/12 mx-auto my-4 bg-gray-50 shadow-lg p-4 rounded-lg transition-all duration-300">
             {/* Header */}
-            <div className="w-6/12 mx-auto my-4
-            bg-gray-50 shadow-lg p-4">
-            <div className="flex justify-between cursor-pointer" 
-            onClick={handlerClick}
+            <div 
+                className="flex justify-between items-center cursor-pointer p-2 hover:bg-gray-100 rounded-lg transition-colors duration-300" 
+                onClick={handleClick}
             >
                 <span className="font-bold text-lg">{data.title} ({data.itemCards.length})</span>
-            <span className="text-2xl">⬇️</span>
+                <span className="text-2xl">
+                    {showItems ? <FaChevronUp /> : <FaChevronDown />}
+                </span>
             </div>
-            {/* showItem is true and ItemList is true then show on UI ItemList component */}
-            {showItems && <ItemList items={data.itemCards}/>}
-        </div>
-        {/* Accordion body */}
-        
+            {/* Accordion body */}
+            {showItems && (
+                <div className="mt-4 transition-all duration-300 ease-in-out">
+                    <ItemList items={data.itemCards} />
+                </div>
+            )}
         </div>
         
     );

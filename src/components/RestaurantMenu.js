@@ -25,10 +25,6 @@ const RestaurantMenu = () =>{
     // index to open accordion
     const [showIndex, setShowIndex] = useState(null);
 
-    const toggleShowIndex = (index) => {
-        setShowIndex(showIndex === index ? null : index);
-    };
-
 // useEffect hook to fetch menu data when the component mounts
     // useEffect(() =>{
     //     fetchMenu();
@@ -66,7 +62,8 @@ const RestaurantMenu = () =>{
             {/* categories accordion */}
             {
                 // controlled component
-                categories.map((cardData, index)=>(<RestaurantCategory key={cardData?.card?.card?.title} data={cardData?.card?.card} showItems={index === showIndex ? true : false}
+                categories.map((cardData, index)=>(<RestaurantCategory key={cardData?.card?.card?.title} data={cardData?.card?.card} showItems={index === showIndex}
+                    // called by restaurantCategory handler
                 setShowIndex = {()=> setShowIndex(index)}
                 />))
             }

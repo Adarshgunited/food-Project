@@ -40,7 +40,7 @@ const cartSlice = createSlice({
         // no need action, another slice
         removeItem : (state, action) => {
             //remove items based on id
-            console.log(state.items);
+            // console.log(state.items);
             const nextCartItems = state.items.filter((cartItem) => cartItem.card.info.id !== action.payload.card.info.id);
             state.items = nextCartItems;
             
