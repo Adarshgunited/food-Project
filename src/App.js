@@ -51,7 +51,7 @@ const AppLayout = () =>{
             <Header/>
         {/* placeholder or layout template for route-specific component */}
         <Outlet/>
-        {/* <Footer/> */}
+        <Footer/>
     </div>
         </UserContext.Provider>
         </Provider>

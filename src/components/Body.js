@@ -6,6 +6,7 @@ import useOnlineStatus from "../utils/useOnlineStatus";
 import { Link } from "react-router-dom";
 import UserContext from "../utils/UserContext";
 import { RESTAURANTLIST_API } from "../utils/constants";
+import { FaWifi } from "react-icons/fa";
 // import FoodCarousel from "./FoodCarousel";
 
 
@@ -25,7 +26,7 @@ const Body = () => {
     //higher order function, return a new component to RestaurantVegCard
     const RestaurantVegCard = withVegLabel(RestaurantCard);
 
-    //search (no match)
+    //search (no match) 
     const [searchPerformed, setSearchPerformed] = useState(false);
 
     // console.log("body rendered",listOfRestaurant);
@@ -36,13 +37,11 @@ const Body = () => {
     fetchData();
     },[]);
 
-    //fn to fetch restaurant data from an api
+    //fn to fetch restaurant data
     const fetchData = async() => {
-        try {
-            const data = await fetch(RESTAURANTLIST_API);
+     try {
+        const data = await fetch(RESTAURANTLIST_API);
         
-        //&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING
-
         // convert data to json format;
         const json = await data.json();
 
@@ -63,15 +62,26 @@ const Body = () => {
     //custom hook(check oneLine)
     const onlineStatus = useOnlineStatus();
 
-    if(!onlineStatus)
-    return <h1 className="flex justify-center items-center font-bold text-2xl p-4 m-4">Look's like you're offline!!! Please check your internet connection.</h1>
+    if(!onlineStatus){
+      return (
+        <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
+            <FaWifi className="text-red-600 text-6xl animate-pulse mb-4" />
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
+                Looks like you're offline!!!
+            </h1>
+            <p className="mt-2 text-lg md:text-xl text-gray-600">
+                Please check your internet connection.
+            </p>
+        </div>
+      )
+    }
 
     // import the setUserName fn from the App.js
     // const {loggedInUser, setUserName} = useContext(UserContext);
      
     const handleSearch = () => {
         const filtered = listOfRestaurant.filter((restaurant) =>
-            restaurant.info.name.toLowerCase().includes(searchText.toLowerCase())
+          restaurant.info.name.toLowerCase().includes(searchText.toLowerCase())
           );
           setFilteredRestaurant(filtered);
           setSearchText(""); // Clear the input box after search

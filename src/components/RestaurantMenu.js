@@ -25,6 +25,10 @@ const RestaurantMenu = () =>{
     // index to open accordion
     const [showIndex, setShowIndex] = useState(null);
 
+    const toggleShowIndex = (index) => {
+        setShowIndex(showIndex === index ? null : index);
+    };
+
 // useEffect hook to fetch menu data when the component mounts
     // useEffect(() =>{
     //     fetchMenu();
