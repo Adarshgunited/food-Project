@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+// import 'react-toastify/dist/ReactToastify.css'; // Import toast CSS
+import { FaPlus, FaMinus, FaTrash } from "react-icons/fa"; // Import icons
 
 // imagine cartSlice is a big object.
 // createSlice is for making config for our cartSlice. it has initially a name, initialState, and reducers.
@@ -25,14 +27,14 @@ const cartSlice = createSlice({
             if(itemIndex >=0){
                 state.items[itemIndex].cartQuantity += 1;
                 // toast info, info in blue
-                toast.info(`${state.items[itemIndex].card.info.name} quantity increased by 1 unit`,{position:"bottom-center"});
+                toast.info(`${state.items[itemIndex].card.info.name} quantity increased by 1 unit`,{position:"top-right"});
             } else {
                 const tempProduct = {...action.payload, cartQuantity: 1};
             // got an items and added
             //We have to mutate/modify the state (redux toolkit)
             state.items.push(tempProduct);
             // toast, success in green
-            toast.success(`${action.payload.card.info.name} added to cart`,{position:"bottom-center"});
+            toast.success(`${action.payload.card.info.name} added to cart`,{position:"top-right"});
 
             // console.log(action);
             }
@@ -45,20 +47,25 @@ const cartSlice = createSlice({
             state.items = nextCartItems;
             
             //remove msg
-            toast.error(`${action.payload.card.info.name} removed from cart`,{position:"bottom-center"})
+            toast.error(`${action.payload.card.info.name} removed from cart`,{position:"top-right"})
 
         },
         decreaseQuantity: (state,action)=> {
             const itemIndex = state.items.findIndex(
-                cartItem => cartItem.info.id === action.payload.card.info.id
+                cartItem => cartItem.card.info.id === action.payload.card.info.id
             )
 
             if(state.items[itemIndex].cartQuantity > 1){
                 state.items[itemIndex].cartQuantity -= 1;
 
-                toast.info(`Decreased ${action.payload.card.info.name} cart quantity`,{position:"bottom-center"})
+                toast.info(`Decreased ${action.payload.card.info.name} cart quantity`,{position:"top-right"})
             }
 
+        },
+        increaseQuantity: (state, action) => {
+            const itemIndex = state.items.findIndex(cartItem => cartItem.card.info.id === action.payload.card.info.id);
+            state.items[itemIndex].cartQuantity += 1;
+            toast.info(`Increased ${action.payload.card.info.name} cart quantity`, { position: "top-right" });
         },
         // originalState = {items:["pizza"]};
         clearCart : (state) => {
@@ -71,7 +78,7 @@ const cartSlice = createSlice({
 })
 
 // export actions
-export const {addItem, removeItem, clearCart} = cartSlice.actions;
+export const {addItem, removeItem,decreaseQuantity, increaseQuantity, clearCart} = cartSlice.actions;
 
 // here we r only exporting the reducers.
 export default cartSlice.reducer;

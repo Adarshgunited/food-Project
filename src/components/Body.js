@@ -38,26 +38,27 @@ const Body = () => {
     },[]);
 
     //fn to fetch restaurant data
-    const fetchData = async() => {
-     try {
-        const data = await fetch(RESTAURANTLIST_API);
-        
-        // convert data to json format;
-        const json = await data.json();
-
-        // console.log(json);
-        //Optional Chaining(?) - for better data handling.
-        const restaurants = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-        setListOfRestaurant(restaurants);
-        setFilteredRestaurant(restaurants);
-        // setCarouselData(json?.data?.cards[0]?.card?.card?.imageGridCards?.info)
-        
-            
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-        
-    }
+    const fetchData = async () => {
+      try {
+          const data = await fetch(RESTAURANTLIST_API);
+          const json = await data.json();
+  
+          const restaurants = json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+  
+          if (restaurants) {
+              setListOfRestaurant(restaurants);
+              setFilteredRestaurant(restaurants);
+          } else {
+              console.error('No restaurants found in the fetched data.');
+          }
+          
+          // Optionally set carousel data
+          // setCarouselData(json?.data?.cards[0]?.card?.card?.imageGridCards?.info);
+      } catch (error) {
+          console.error('Error fetching data:', error);
+      }
+  }
+  
 
     //custom hook(check oneLine)
     const onlineStatus = useOnlineStatus();
@@ -109,6 +110,7 @@ const Body = () => {
             <div className="flex flex-wrap justify-between items-center shadow-lg 
             p-4 
             lg:ml-36
+            lg:mr-36 
             ">
                 <div className="
                 flex 

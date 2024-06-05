@@ -73,7 +73,7 @@ const Header = () =>{
                 <li className="px-4 py-2 md:py-0 hover:text-green-600 hover:underline"><Link  onClick={closeMenu} to="/contact">Contact Us</Link></li>
                 <li className="px-4 py-2 md:py-0 hover:text-green-600 hover:underline"><Link  onClick={closeMenu} to="/cart">Cart ({cartItems.length})</Link></li>
                 {/* <li className="px-4 py-2 md:py-0 hover:text-green-600 hover:underline"><Link to="/grocery">Grocery</Link></li> */}
-                <li className="px-4 py-2 md:py-0 ">Online:{onlineStatus?"Yes":"No"}</li>
+                <li className="px-4 py-2 md:py-0 ">Online: {onlineStatus?"Yes":"No"}</li>
 
                 {/* <button className="login" onClick={()=>{
                     btnNameReact === "Login" ?

@@ -5,6 +5,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: '#1D4ED8',  // Custom primary color
+        secondary: '#F59E0B', // Custom secondary color
+      },
+      animation: {
+        'bounce-slow': 'bounce 3s infinite',
+      },
       keyframes: {
         shimmer: {
           '0%': { transform: 'translateX(-150px)' },
@@ -19,3 +26,4 @@ module.exports = {
   },
   plugins: [],
 }
+
