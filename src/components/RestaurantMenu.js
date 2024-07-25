@@ -13,7 +13,7 @@ const RestaurantMenu = () => {
 
     // Custom hook to fetch menu data
     const resInfo = useRestaurantMenu(resId);
-    console.log(resInfo);
+    // console.log(resInfo);
 
     // Index to open accordion
     const [showIndex, setShowIndex] = useState(null);
@@ -37,7 +37,7 @@ const RestaurantMenu = () => {
         (c) => c.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
     );
 
-    console.log(categories);
+    // console.log(categories);
 
     return (
         <div className="text-center">
