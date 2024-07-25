@@ -1,0 +1,105 @@
+notes of app.js file.
+
+//Chunking
+//Code Splitting
+//dynamic bundling
+//Lazy Loading
+//on demand loading
+//dynamic import
+
+outLet - In React Router, an "outlet" typically refers to the location where the content for a specific route is rendered.
+It's a placeholder or target area where the UI associated with a particular route is displayed.
+This component is likely used as a layout template for different views or pages in the application, providing a consistent structure that includes a header, dynamic content area, and a footer SPA(Single page application).
+
+createBrowserRouter - createBrowserRouter only exists to make wrapping multiple child routes in the same layout simpler. recommend by react router dom for dev projects. fn used to crate a router config.
+
+Certainly! Let's go through the code and explain each part:
+
+```jsx
+import React, { Suspense, lazy } from "react";
+import ReactDOM from "react-dom/client";
+import Header from "./components/Header";
+import Body from "./components/Body";
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+const Grocery = lazy(() => import("./components/Grocery"));
+const About = lazy(() => import("./components/About"));
+
+const AppLayout = () => (
+  <div className="app">
+    <Header />
+    <Outlet />
+    <Footer />
+  </div>
+);
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Body />
+      },
+      {
+        path: "/about",
+        element: (
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <About />
+          </Suspense>
+        )
+      },
+      {
+        path: "/contact",
+        element: <Contact />
+      },
+      {
+        path: "/restaurants/:resId",
+        element: <RestaurantMenu />
+      },
+      {
+        path: "/grocery",
+        element: (
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <Grocery />
+          </Suspense>
+        )
+      }
+    ],
+    errorElement: <Error />
+  }
+]);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(<RouterProvider router={appRouter} />);
+```
+
+Now, let's break it down step by step:
+
+1. **Imports:**
+   - `React`, `Suspense`, `lazy`: These are imports from the React library. `Suspense` is used for code-splitting, and `lazy` is used to lazily load components.
+   - `ReactDOM` is imported from `react-dom/client`, which is used for rendering React components into the DOM.
+   - `Header`, `Body`, `Outlet`, `RouterProvider`, `createBrowserRouter`, `Grocery`, `About`: These are components and utilities imported from various files.
+
+2. **Lazy Loading:**
+   - `const Grocery = lazy(() => import("./components/Grocery"));`: Lazily loads the `Grocery` component. This means that the component will be loaded only when it is actually needed, improving performance by reducing the initial bundle size.
+   - Similarly, `const About = lazy(() => import("./components/About"));` lazily loads the `About` component.
+
+3. **AppLayout Component:**
+   - `const AppLayout = () => ...`: Defines a functional component `AppLayout` that represents the layout of the entire app. It includes a header, an outlet (a placeholder for route-specific components), and a footer.
+
+4. **Router Configuration:**
+   - `const appRouter = createBrowserRouter([...]);`: Configures the app's routes using `createBrowserRouter` from `react-router-dom`. It defines a route for the root path ("/") with nested routes for different sections like "about," "contact," etc.
+
+5. **Routing Structure:**
+   - The routes are structured using a tree-like hierarchy where the root route (`/`) has children routes representing different sections of the app.
+   - Each route specifies an `element` to be rendered when the route is matched. For dynamic routes, like "/about," a `Suspense` component is used to handle asynchronous loading.
+
+6. **ReactDOM.createRoot:**
+   - `const root = ReactDOM.createRoot(document.getElementById("root"));`: Creates a root in the DOM where the React app will be rendered. This is part of the Concurrent Mode API introduced in React 18.
+
+7. **Rendering:**
+   - `root.render(<RouterProvider router={appRouter} />);`: Renders the app using `ReactDOM.createRoot`. The `RouterProvider` component is used to provide routing functionality to the app, and it receives the `appRouter` configuration as a prop.
+
+This code represents a React app with lazy loading, routing, and a layout structure. The use of `lazy` and `Suspense` allows for more efficient loading of components, and the routing is configured using the `react-router-dom` library.

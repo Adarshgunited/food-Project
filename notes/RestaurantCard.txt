@@ -1,0 +1,67 @@
+This code defines a `RestaurantCard` component and a higher-order component (`withVegLabel`) to enhance it. Let's break down each part:
+
+```jsx
+import { CDN_URL } from "../utils/constants";
+
+const RestaurantCard = (props) => {
+    const { resData } = props;
+    const { cloudinaryImageId, name, cuisines, costForTwo, avgRating, sla } = resData.info;
+
+    return (
+        <div className="m-4 p-4 w-[200px] rounded-md shadow-lg" style={{ backgroundColor: "#f0f0f0" }}>
+            <img
+                className="rounded-lg"
+                alt="res-logo"
+                src={CDN_URL + cloudinaryImageId}
+            />
+            <h3 className="font-bold py-4 text-lg">{name}</h3>
+            <h4 className="font-semibold py-2">{costForTwo}</h4>
+            <h4 className="font-semibold py-2">{cuisines.join(", ")}</h4>
+            <h4 className="font-semibold py-2">{avgRating} stars</h4>
+            <h4 className="font-semibold py-2">{sla.deliveryTime} mins</h4>
+        </div>
+    );
+};
+
+export const withVegLabel = (RestaurantCard) => {
+    return (props) => {
+        const { veg } = props.resData.info;
+        return veg ? (
+            <div>
+                <label className="absolute bg-black text-white mx-4 p-2 rounded-lg font-bold">Veg</label>
+                <RestaurantCard {...props} />
+            </div>
+        ) : (
+            <div>
+                <label className="absolute bg-black text-white mx-4 p-2 rounded-lg font-bold">NonVeg</label>
+                <RestaurantCard {...props} />
+            </div>
+        )
+    }
+}
+
+export default RestaurantCard;
+```
+
+Here's an explanation of each part:
+
+1. **Imports:**
+   - Imports `CDN_URL` from the "../utils/constants" file.
+
+2. **RestaurantCard Component:**
+   - `RestaurantCard` is a functional component that takes `props` as its argument.
+   - Destructures `resData` from `props`.
+   - Extracts relevant information from `resData.info` (cloudinaryImageId, name, cuisines, costForTwo, avgRating, sla).
+   - Renders a card with the restaurant details, including an image, name, cost for two, cuisines, average rating, and delivery time.
+
+3. **Higher Order Component (HOC) - withVegLabel:**
+   - `withVegLabel` is a function that takes `RestaurantCard` as its input and returns a new component.
+   - The returned component takes `props` and extracts the `veg` property from `resData.info`.
+   - Depending on whether the restaurant is vegetarian (`veg` is `true`) or non-vegetarian, it renders a label (`Veg` or `NonVeg`) along with the original `RestaurantCard`.
+   - This HOC is used to add a label to the card based on the type of restaurant.
+
+4. **Export:**
+   - `export default RestaurantCard;`: Exports the `RestaurantCard` component as the default export.
+   - `export const withVegLabel = ...`: Exports the `withVegLabel` HOC for external use.
+
+This structure follows the composition pattern, allowing for the creation of a `RestaurantCard` component that can be enhanced with additional features using the `withVegLabel` HOC. The HOC adds a label based on whether the restaurant is vegetarian or non-vegetarian.

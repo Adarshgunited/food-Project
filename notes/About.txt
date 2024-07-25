@@ -1,0 +1,25 @@
+// converted functional component to class based component 
+    //Initialize state or perform other setup if needed.
+  // componentDidMount is a lifecycle method that runs after the component has been rendered to the screen.
+  //make it an async fn and fetch api data
+    // Perform actions like data fetching after the component mounts.
+
+
+Here's a breakdown of the main parts:
+
+1. **Class Component Declaration:**
+   - The `About` component is now a class component that extends the `Component` class from React.
+
+2. **Constructor (Optional):**
+   - The `constructor` method is optional. If included, it is called when an instance of the component is created. It is often used to initialize state or bind methods.
+
+3. **Lifecycle Method - `componentDidMount`:**
+   - The `componentDidMount` lifecycle method is included, and it is marked as async (though there's no asynchronous code in this example). This method is called after the component has been rendered to the screen, making it a suitable place for actions like data fetching.
+
+4. **Render Method:**
+   - The `render` method is used to define what will be displayed on the screen. In this case, it returns JSX with an `<h1>` header and renders a `UserClass` component with a prop.
+
+5. **Rendering Components:**
+   - It renders both functional (`User`) and class-based (`UserClass`) components within the JSX.
+
+Overall, this class-based component mirrors the functionality of the original functional component, but with the added capability to use lifecycle methods and manage state if needed.

@@ -1,0 +1,19 @@
+Constructor:
+
+The constructor is used to initialize the state of the component. In this case, it initializes the userInfo state with default values.
+componentDidMount:
+
+This lifecycle method is called after the component is inserted into the DOM. It's commonly used to fetch data asynchronously. In this example, it fetches user information from the GitHub API.
+componentDidUpdate:
+
+This lifecycle method is called whenever the component updates. It can be used to perform actions based on changes in props or state. In this example, it checks if count and count1 in the state have changed.
+componentWillUnmount:
+
+This lifecycle method is called just before the component is removed from the DOM. It's a good place to perform cleanup tasks, like clearing intervals or canceling network requests.
+Render Method:
+
+The render method returns JSX that describes what the component should render. In this case, it renders user information based on the state.
+Destructuring:
+
+The const { name, location, avatar_url } = this.state.userInfo; line uses destructuring to extract values from the userInfo state.
+This class-based component follows React's class component lifecycle and is structured in a way that handles the fetching of data, updates, and unmounting of the component. If you have any specific questions or need further clarification, feel free to ask!

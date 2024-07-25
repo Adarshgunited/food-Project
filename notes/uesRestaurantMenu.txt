@@ -1,0 +1,15 @@
+
+Your useRestaurantMenu custom hook looks well-implemented. It utilizes the useEffect and useState hooks to fetch restaurant menu data asynchronously. Here are a few points to note:
+
+Dependency Array in useEffect:
+
+You have an empty dependency array ([]) in the useEffect. This means that the fetchData function will only be called once when the component mounts. If you want the data to be fetched again when resId changes, you might consider adding resId to the dependency array.
+Hardcoded API URL:
+
+The API URL is hardcoded in the fetch call. This might be okay for a small application, but in a larger application, you might want to consider making the API URL more dynamic, perhaps by passing it as a parameter to the custom hook.
+Loading State:
+
+You are using the setResInfo function to update the state with the fetched data. This will trigger a re-render when the state changes. You are initializing resInfo with null, indicating a loading state until the data is fetched.
+Error Handling:
+
+Currently, there is no error handling in the fetchData function. It might be beneficial to add error handling to gracefully handle situations where the API request fails.

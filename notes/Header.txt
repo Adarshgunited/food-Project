@@ -1,0 +1,73 @@
+if no dependency array then useEffect is called on every render of the component. 
+if dependency array is empty [] then useEffect is called on initial render(just once).
+if dependency array is [btnNameReact] then useEffect is called everytime btnNameReact state variable is updated.
+
+This code defines a React functional component called `Header`. Let's go through the code and explain each part:
+
+```jsx
+import { useEffect, useState } from "react";
+import { LOGO_URL } from "../utils/constants";
+import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
+
+const Header = () => {
+
+  const [btnNameReact, setBtnNameReact] = useState("Login");
+  const onlineStatus = useOnlineStatus();
+
+  useEffect(() => {
+    console.log("useEffect is called");
+  }, [btnNameReact]);
+
+  return (
+    <div className="flex justify-between shadow-lg bg-gray-300 sm:bg-yellow-200 md:bg-blue-300 lg:bg-orange-200">
+      <div className="logo-container">
+        <Link to="/">
+          <img className="w-36" src={LOGO_URL} alt="logo" />
+        </Link>
+      </div>
+      <div className="flex items-center flex-wrap">
+        <ul className="flex p-4 m-4">
+          <li className="px-4">Online: {onlineStatus ? "Yes" : "No"}</li>
+          <li className="px-4"><Link to="/">Home</Link></li>
+          <li className="px-4"><Link to="/about">About Us</Link></li>
+          <li className="px-4"><Link to="/contact">Contact Us</Link></li>
+          <li className="px-4">Cart</li>
+          <li className="px-4"><Link to="/grocery">Grocery</Link></li>
+          <button className="login" onClick={() => {
+            btnNameReact === "Login" ?
+              setBtnNameReact("Logout") :
+              setBtnNameReact("Login");
+          }}>{btnNameReact}</button>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export default Header;
+```
+
+Now, let's break down the code:
+
+1. **Imports:**
+   - `useEffect` and `useState` are hooks from React used to handle side effects and manage state, respectively.
+   - `LOGO_URL` is imported from the "../utils/constants" file, presumably containing the URL for the logo image.
+   - `Link` is imported from "react-router-dom" for creating navigation links.
+   - `useOnlineStatus` is a custom hook imported from "../utils/useOnlineStatus" for tracking online/offline status.
+
+2. **State and Effect:**
+   - `const [btnNameReact, setBtnNameReact] = useState("Login");`: Declares a state variable `btnNameReact` with an initial value of "Login" and a function `setBtnNameReact` to update this state. This state is used for the text of the login/logout button.
+   - `const onlineStatus = useOnlineStatus();`: Calls the custom hook `useOnlineStatus` to get the current online status.
+
+3. **useEffect:**
+   - `useEffect(() => { console.log("useEffect is called"); }, [btnNameReact]);`: Sets up an effect that logs a message when the `btnNameReact` state changes. It has a dependency array `[btnNameReact]`, so it will run only when `btnNameReact` changes.
+
+4. **Render:**
+   - The component returns JSX that represents the header of the application.
+   - The header consists of two main sections - a logo container and a navigation section.
+   - The logo is a clickable link (`<Link to="/">`) that navigates to the home page.
+   - The navigation section includes an unordered list (`<ul>`) with list items (`<li>`) containing links to various pages.
+   - The online status is displayed, and there's a button for login/logout that toggles its text based on the `btnNameReact` state.
+
+In summary, this `Header` component is a functional component that displays a navigation bar with a logo, links to different pages, online status, and a login/logout button. It uses React hooks for state management and side effects. The online status is determined using a custom hook.

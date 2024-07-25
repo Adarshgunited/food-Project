@@ -1,0 +1,131 @@
+// not using keys (not acceptable) <<< index as key <<< unique id (best practice)
+    //Whenever state variables update, react triggers a reconciliation cycle(re-renders the component).
+
+// fetch data from api
+        // Response Object is assigned by fetch:
+//The Response object represents the response to the request made by fetch. It includes information such as the status of the request, headers, and the body of the response.
+// The fetch function is used to make a network request to the specified URL, and it returns a Response object.
+// The await keyword is used to wait for the asynchronous operation (fetching data) to complete.
+
+// https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.4256875&lng=72.8373771&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING
+
+//conditional rendering(real data take time, display shimmer ui component)
+        // if(listOfRestaurant.length === 0){
+        //     return <Shimmer/>
+        // }
+
+Let's break down the `Body` component and understand each part:
+
+```jsx
+import RestaurantCard, { withVegLabel } from "./RestaurantCard";
+import { useEffect, useState } from "react";
+import resList from "../utils/mockData";
+import Shimmer from "./Shimmer";
+import useOnlineStatus from "../utils/useOnlineStatus";
+import { Link } from "react-router-dom";
+
+const Body = () => {
+  const [listOfRestaurant, setListOfRestaurant] = useState([]);
+  const [filteredRestaurant, setFilteredRestaurant] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const RestaurantVegCard = withVegLabel(RestaurantCard);
+  const onlineStatus = useOnlineStatus();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const data = await fetch("https://thingproxy.freeboard.io/fetch/https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.4256875&lng=72.8373771&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+    const json = await data.json();
+
+    console.log(json);
+    setListOfRestaurant(json?.data.cards[3].card.card.gridElements.infoWithStyle.restaurants);
+    setFilteredRestaurant(json?.data.cards[3].card.card.gridElements.infoWithStyle.restaurants);
+  }
+
+  if (onlineStatus === false)
+    return <h1>Look's like you're offline!!! Please check your internet connection.</h1>
+
+  return listOfRestaurant.length === 0 ? (
+    <Shimmer />
+  ) : (
+    <div className="body">
+      <div className="flex items-center">
+        <div className="m-4 p-4">
+          <input
+            type="text"
+            className="border border-solid border-black rounded-md"
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+          />
+          <button
+            className="px-4 bg-green-500 m-4 rounded-lg"
+            onClick={() => {
+              const filteredRestaurant = listOfRestaurant.filter((restaurant) => restaurant.info.name.toLowerCase().includes(searchText.toLowerCase()));
+              setFilteredRestaurant(filteredRestaurant);
+            }}
+          >
+            Search
+          </button>
+        </div>
+        <div className="m-4 p-4 flex items-center">
+          <button
+            className="m-4 p-4 bg-gray-100 rounded-lg"
+            onClick={() => {
+              const filteredList = listOfRestaurant.filter((restaurant) => restaurant.info.avgRating >= 4.2)
+              setFilteredRestaurant(filteredList)
+            }}
+          >
+            Top Rated Restaurants
+          </button>
+        </div>
+      </div>
+      <div className="res-container flex flex-wrap">
+        {filteredRestaurant.map((restaurant) => (
+          <Link key={restaurant.info.id} to={"/restaurants/" + restaurant?.info.id}>
+            {restaurant?.info?.veg ? (<RestaurantVegCard key={restaurant?.info.id} resData={restaurant} />) : (<RestaurantCard key={restaurant?.info.id} resData={restaurant} />)}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default Body;
+```
+
+Here's an explanation of each part:
+
+1. **Imports:**
+   - Imports necessary dependencies, components, and utilities, including `RestaurantCard`, `withVegLabel`, `useEffect`, `useState`, `Shimmer`, `useOnlineStatus`, and `Link` from "react-router-dom."
+
+2. **State Initialization:**
+   - Initializes state variables using the `useState` hook to manage the list of restaurants (`listOfRestaurant`), filtered restaurants (`filteredRestaurant`), and the search text (`searchText`).
+
+3. **Higher Order Component (HOC):**
+   - Uses the `withVegLabel` higher-order component to enhance the `RestaurantCard` component, creating a new component named `RestaurantVegCard`.
+
+4. **Fetch Data:**
+   - Uses the `useEffect` hook to fetch data when the component mounts.
+   - Fetches restaurant data from an API (Swiggy's API in this case) and sets the retrieved data to the state variables.
+
+5. **Online Status Check:**
+   - Utilizes the `useOnlineStatus` custom hook to check the online status. If offline, it renders an error message.
+
+6. **Conditional Rendering with Shimmer:**
+   - Conditionally renders the `Shimmer` component while the data is being fetched (when `listOfRestaurant` is empty).
+
+7. **Search Input and Button:**
+   - Provides an input box for searching (`<input>`), and a button (`<button>`) to trigger the search based on the entered text.
+
+8. **Top Rated Restaurants Button:**
+   - Offers a button to filter and display top-rated restaurants based on the average rating.
+
+9. **Restaurant Cards:**
+   - Maps over the filtered restaurants (`filteredRestaurant`) and renders individual `RestaurantCard` components (or `RestaurantVegCard` components for vegetarian restaurants).
+   - Uses `Link` from "react-router-dom" to create links to specific restaurant pages.
+
+Overall, the `Body` component handles the display of restaurant data, including search functionality and filters, based on the user's input and online status. It utilizes React hooks for state management and side effects.

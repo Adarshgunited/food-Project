@@ -1,0 +1,26 @@
+Your RestaurantMenu component looks well-structured and it seems like you are using React Router's useParams hook to extract the resId parameter from the URL. You also have a custom hook useRestaurantMenu to fetch restaurant menu data.
+
+Here are a few observations and suggestions:
+
+Unused State Variables and useEffect:
+
+You've commented out the state variable resInfo and the useEffect block that fetches menu data. Since you're using the useRestaurantMenu hook, which likely manages the state internally, you might not need these commented-out sections. Remove them if they are not necessary.
+Shimmer Component Usage:
+
+You are using a Shimmer component while waiting for the menu data to load (if(resInfo === null)). This is a good practice to provide a loading indicator to users.
+Category Rendering:
+
+You have commented out the code related to rendering categories using RestaurantCategory. If you have a component for rendering categories (RestaurantCategory), make sure to uncomment and implement it if needed.
+Key Prop in the List Rendering:
+
+You are providing a key prop while mapping through itemCards. This is good for React's performance optimization.
+Variable Access Safety:
+
+When accessing properties like resInfo?.data?.cards[0]?.card?.card?.info, you are using optional chaining (?.) which is a good practice to avoid potential errors if any of these properties are undefined or null.
+Currency Formatting:
+
+When rendering the price, you are using {" ₹"}{item.card.info.price / 100 || item.card.info.defaultPrice / 100}. If you are dealing with currency, consider using a library like Intl.NumberFormat for more robust currency formatting.
+Consistent Naming:
+
+Ensure consistency in naming conventions. For example, you are using both resId and params for the restaurant ID. It's good to stick to a consistent naming convention for clarity.
+Overall, the component looks good, and it seems like you're following best practices. If you encounter any specific issues or have further questions, feel free to ask!

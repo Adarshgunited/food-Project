@@ -1,0 +1,15 @@
+Explanation:
+
+useEffect Hook:
+
+The useEffect hook is used to perform side effects in a functional component. In this case, it logs "useEffect" to the console.
+Cleanup Function:
+
+The second argument to useEffect is an empty dependency array ([]), indicating that the effect should run once after the initial render. The cleanup function inside useEffect will be invoked when the component is unmounted or when the dependency array changes.
+Cleanup Logic (commented out):
+
+The cleanup function can include logic to clean up resources like intervals, event listeners, or any other side effects. In the provided example, clearInterval is commented out, but you might uncomment it and use it to clear an interval if you had one.
+Console Logs:
+
+The console.log("render") outside the useEffect will be executed on every render of the component.
+This component demonstrates the basic structure of using useEffect for side effects and cleanup in a functional component. Keep in mind that the cleanup function is optional and is used to clean up any resources or subscriptions created by the effect.
